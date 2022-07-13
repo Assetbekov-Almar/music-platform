@@ -1,10 +1,9 @@
-import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import { getTrackAsync, selectTracks } from './trackSlice'
+import { useAppDispatch, useAppSelector } from '../../app/store'
 
 function Track() {
 	const dispatch = useAppDispatch()
 	const tracks = useAppSelector(selectTracks)
-	console.log(tracks)
 
 	return (
 		<div>
