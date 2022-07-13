@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import type { AppState } from '../../app/store'
 import { fetchTrack } from './trackAPI'
@@ -9,7 +9,7 @@ export interface TrackState {
 }
 
 const initialState: TrackState = {
-	value: {},
+	value: [],
 	status: 'idle',
 }
 
@@ -22,23 +22,24 @@ export const trackSlice = createSlice({
 	name: 'track',
 	initialState,
 	reducers: {
-		getTrack: (state, action: PayloadAction<string>) => {
-			state.value = {}
+		resetTrack: (state) => {
+			state.value = []
 		},
 	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(getTrackAsync.pending, (state) => {
 				state.status = 'loading'
+				state.value = []
 			})
 			.addCase(getTrackAsync.fulfilled, (state, action) => {
 				state.status = 'idle'
-				state.value = action.payload
+				state.value = action.payload.items
 			})
 	},
 })
 
-export const { getTrack } = trackSlice.actions
+export const { resetTrack } = trackSlice.actions
 
 export const selectTracks = (state: AppState) => state.track.value
 
