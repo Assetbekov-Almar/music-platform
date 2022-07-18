@@ -35,6 +35,6 @@ export const userTracksSlice = createSlice({
 	},
 })
 
-export const selectUserTracks = (state: AppState) => state.track.value
+export const selectUserTracks = (state: AppState) => state.userTracks.value
 
 export default userTracksSlice.reducer

@@ -10,11 +10,20 @@ function UserTracks() {
 		dispatch(getUserTracksAsync())
 	}, [])
 
+	console.log(tracks)
+
 	return (
 		<div>
-			{tracks.map((item) => (
-				<div key={item.id}></div>
-			))}
+			{tracks.map((item) => {
+				const { track } = item
+				const { images, name } = track.album
+				const { height, width, url } = images[0]
+				return (
+					<div key={track.id}>
+						<img alt={name} height={height} width={width} src={url} />
+					</div>
+				)
+			})}
 		</div>
 	)
 }
