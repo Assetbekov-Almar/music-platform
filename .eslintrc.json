@@ -34,6 +34,7 @@
 		"prettier/prettier": "error",
 		"@typescript-eslint/ban-ts-comment": "off",
 		"@typescript-eslint/ban-ts-ignore": "off",
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+		"react-hooks/exhaustive-deps": "off"
 	}
 }

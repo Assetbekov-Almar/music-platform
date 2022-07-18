@@ -1,4 +1,4 @@
-import { getTrackAsync, resetTrack, selectTracks } from './trackSlice'
+import { getTrackAsync, resetTrack, selectTracks } from './Slice'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import useDebounce from '../../app/hooks/useDebounce'
 import { useEffect, useState } from 'react'

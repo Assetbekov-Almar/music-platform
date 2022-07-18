@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import type { AppState } from '../../app/store'
-import { fetchTrack } from './trackAPI'
+import { fetchTrack } from './API'
 
 export interface TrackState {
 	value: any
