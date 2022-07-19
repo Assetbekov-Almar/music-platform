@@ -7,33 +7,29 @@ const useToken = () => {
 	const [isInit, setIsInit] = useState(false)
 
 	useEffect(() => {
+		const token = window.localStorage.getItem('access_token')
+		if (token) {
+			setIsInit(true)
+			return
+		}
+
 		const code = router.query.code as string
 		const fetchTokens = async () => {
-			const tokens = await getTokens(code)
-			console.log(tokens)
+			await getTokens(code)
+			const token = window.localStorage.getItem('access_token')
+			if (!token) {
+				router.push('/auth')
+				return
+			}
+			router.push('/')
+			setIsInit(true)
+			return
 		}
 		if (code) {
 			fetchTokens()
+		} else {
+			router.push('/auth')
 		}
-		const hash = window.location.hash
-		let token = window.localStorage.getItem('token')
-
-		if (!token && hash) {
-			token =
-				hash
-					.substring(1)
-					.split('&')
-					.find((elem) => elem.startsWith('code'))
-					?.split('=')[1] || ''
-			window.location.hash = ''
-			window.localStorage.setItem('code', token)
-		}
-
-		if (!token) {
-			// router.push('/auth')
-			return
-		}
-		setIsInit(true)
 	}, [router])
 
 	return { isInit }

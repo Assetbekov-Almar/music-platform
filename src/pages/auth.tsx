@@ -7,7 +7,7 @@ const Auth = () => {
 	const [isInit, setIsInit] = useState(false)
 
 	useEffect(() => {
-		const token = window.localStorage.getItem('token')
+		const token = window.localStorage.getItem('access_token')
 		if (token) {
 			router.push('/')
 			return

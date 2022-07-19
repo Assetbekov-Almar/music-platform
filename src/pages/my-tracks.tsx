@@ -10,8 +10,6 @@ function UserTracks() {
 		dispatch(getUserTracksAsync())
 	}, [])
 
-	console.log(tracks)
-
 	return (
 		<div>
 			{tracks.map((item) => {
