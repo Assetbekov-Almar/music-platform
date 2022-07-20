@@ -1,5 +1,5 @@
 export async function fetchUserTracks(): Promise<{ items: any }> {
-	const token = window.localStorage.getItem('token')
+	const token = window.localStorage.getItem('access_token')
 	const response = await fetch(`https://api.spotify.com/v1/me/tracks`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
