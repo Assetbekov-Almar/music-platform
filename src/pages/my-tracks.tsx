@@ -28,6 +28,7 @@ function UserTracks() {
 								{artist.name}
 							</div>
 						))}
+						<div className={styles.track__name}>{track.name}</div>
 						{preview_url && (
 							<audio controls>
 								<source src={preview_url} type='audio/mpeg' />

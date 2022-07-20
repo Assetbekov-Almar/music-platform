@@ -15,10 +15,27 @@
   border-radius: 15px;
   height: 100%;
   padding: 20px;
+  position: relative;
+  transform-style: preserve-3d;
+
+  audio {
+    margin-top: 7px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 8px 3px rgba(129, 185, 247, 0.8);
+    top: -2px;
+  }
 }
 
 .track__artist {
   font-size: 18px;
+  font-weight: 500;
   color: variables.$text-color;
+}
 
+.track__name {
+  font-size: 16px;
+  color: variables.$text-color;
 }
