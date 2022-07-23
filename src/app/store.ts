@@ -2,10 +2,11 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { trackSlice } from '../features/track/Slice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { userTracksSlice } from '../features/userTracks/Slice'
+import { useProfileSlice } from '../features/userProfile/Slice'
 
 export function makeStore() {
 	return configureStore({
-		reducer: { track: trackSlice.reducer, userTracks: userTracksSlice.reducer },
+		reducer: { track: trackSlice.reducer, userTracks: userTracksSlice.reducer, profile: useProfileSlice.reducer },
 	})
 }
 
