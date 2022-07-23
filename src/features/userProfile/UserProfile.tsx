@@ -10,7 +10,7 @@ const UserProfile = () => {
 	}, [])
 
 	if (!profileData) return <div>loading...</div>
-	console.log(profileData)
+
 	return <div>{profileData.display_name}</div>
 }
 

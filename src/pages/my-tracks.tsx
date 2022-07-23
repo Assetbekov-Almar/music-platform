@@ -1,18 +1,8 @@
-import { useEffect } from 'react'
 import styles from '../styles/my-tracks.module.scss'
-import { useAppDispatch, useAppSelector } from '../app/store'
-import { getUserTracksAsync, selectUserTracks } from '../features/userTracks/Slice'
 import Image from 'next/image'
+import { fetchUserTracks } from '../features/userTracks/API'
 
-function UserTracks() {
-	const dispatch = useAppDispatch()
-	const tracks = useAppSelector(selectUserTracks)
-
-	useEffect(() => {
-		dispatch(getUserTracksAsync())
-	}, [])
-
-	console.log(tracks)
+function UserTracks({ tracks }) {
 	return (
 		<div className={styles.container}>
 			{tracks.map((item) => {
@@ -42,3 +32,14 @@ function UserTracks() {
 }
 
 export default UserTracks
+
+export async function getStaticProps() {
+	const result = await fetchUserTracks()
+	const tracks = result.items
+
+	return {
+		props: {
+			tracks,
+		},
+	}
+}
