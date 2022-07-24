@@ -1,10 +1,11 @@
 import UserProfile from '../features/userProfile/UserProfile'
 import { useEffect, useState } from 'react'
+import { getCookie } from 'cookies-next'
 
 export default function Layout({ children }) {
 	const [isInit, setIsInit] = useState(false)
 	useEffect(() => {
-		const token = window.localStorage.getItem('access_token')
+		const token = getCookie('access_token')
 		setIsInit(!!token)
 	}, [])
 

@@ -1,8 +1,12 @@
-export async function fetchUserTracks() {
-	// const token = window.localStorage.getItem('access_token')
+import { getCookie } from 'cookies-next'
+import { IncomingMessage, ServerResponse } from 'http'
+import { NextApiRequestCookies } from 'next/dist/server/api-utils'
+
+export async function fetchUserTracks(req: IncomingMessage & { cookies: NextApiRequestCookies }, res: ServerResponse) {
+	const token = getCookie('access_token', { req, res })
 	const response = await fetch(`https://api.spotify.com/v1/me/tracks`, {
 		headers: {
-			Authorization: `Bearer BQAQ6qjXLpiDRA6qzFxiD6OCKXguCdwYqrSki_AMntOHhiinbBm80B5ZwnTfRbOuDobpPadCGqb_rcCQL1v2BCHdPJnKmlIi32sC4fyvI-pqgskuGoyWmw9plJiXfgkdxFrxzlLxmVY_Y_gOT_Wx90qG6YB-dWZBteajptOZo_jsoaTs6hcjz7DeHca3NS40b796A0aMDP0OTRU`,
+			Authorization: `Bearer ${token}`,
 		},
 	})
 	const result = await response.json()

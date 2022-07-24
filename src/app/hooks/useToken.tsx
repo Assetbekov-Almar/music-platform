@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { getTokens } from '../../pages/api/tokens'
+import { getCookie } from 'cookies-next'
 
 const useToken = () => {
 	const router = useRouter()
 	const [isInit, setIsInit] = useState(false)
 
 	useEffect(() => {
-		const token = window.localStorage.getItem('access_token')
+		const token = getCookie('access_token')
 		if (token) {
 			setIsInit(true)
 			return
@@ -16,7 +17,7 @@ const useToken = () => {
 		const code = router.query.code as string
 		const fetchTokens = async () => {
 			await getTokens(code)
-			const token = window.localStorage.getItem('access_token')
+			const token = getCookie('access_token')
 			if (!token) {
 				router.push('/auth')
 				return

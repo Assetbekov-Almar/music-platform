@@ -1,6 +1,7 @@
 import styles from '../styles/my-tracks.module.scss'
 import Image from 'next/image'
 import { fetchUserTracks } from '../features/userTracks/API'
+import { GetServerSideProps } from 'next'
 
 function UserTracks({ tracks }) {
 	return (
@@ -33,9 +34,10 @@ function UserTracks({ tracks }) {
 
 export default UserTracks
 
-export async function getStaticProps() {
-	const result = await fetchUserTracks()
-	const tracks = result.items
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const { req, res } = context
+	const result = await fetchUserTracks(req, res)
+	const tracks = result.items || []
 
 	return {
 		props: {

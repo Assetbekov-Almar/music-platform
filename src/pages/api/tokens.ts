@@ -1,4 +1,5 @@
 import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_ENDPOINT } from '../../app/constants'
+import { setCookie } from 'cookies-next'
 
 export async function getTokens(code: string) {
 	const response = await fetch(TOKENS_ENDPOINT, {
@@ -16,7 +17,7 @@ export async function getTokens(code: string) {
 	if (response.status === 200) {
 		const result = await response.json()
 		const { access_token, refresh_token } = result
-		window.localStorage.setItem('access_token', access_token)
-		window.localStorage.setItem('refresh_token', refresh_token)
+		setCookie('access_token', access_token)
+		setCookie('refresh_token', refresh_token)
 	}
 }
