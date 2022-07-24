@@ -2,13 +2,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Track from '../features/track/Track'
-import useToken from '../app/hooks/useToken'
 
 const Home: NextPage = () => {
-	const { isInit } = useToken()
-
-	if (!isInit) return <div>Loading</div>
-
 	return (
 		<div className={styles.container}>
 			<Head>
