@@ -1,13 +1,10 @@
 import { getCookie } from 'cookies-next'
+import spotifyApi from '../../../lib/spotify'
 
 export async function getUserProfile() {
-	const token = getCookie('access_token')
-	const response = await fetch(`https://api.spotify.com/v1/me`, {
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	})
-	const result = await response.json()
+	const result = await spotifyApi.getMe()
+
+	console.log(result)
 
 	return result
 }

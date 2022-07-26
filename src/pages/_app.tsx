@@ -5,10 +5,10 @@ import store from '../app/store'
 import Layout from '../components/Layout'
 import { SessionProvider } from 'next-auth/react'
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 	return (
 		<Provider store={store}>
-			<SessionProvider session={pageProps.session}>
+			<SessionProvider session={session}>
 				<Layout>
 					<Component {...pageProps} />
 				</Layout>
