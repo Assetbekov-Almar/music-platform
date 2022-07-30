@@ -17,6 +17,8 @@ export default function Layout({ children }) {
 		spotifyApi.setAccessToken(session?.user?.accessToken)
 	}, [session, router])
 
+	if (status === 'loading') return <div>Loading...</div>
+
 	return (
 		<div className={styles.container}>
 			{spotifyApi.getAccessToken() && status === 'authenticated' && (

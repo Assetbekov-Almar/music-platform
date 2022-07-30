@@ -1,0 +1,45 @@
+.header {
+  height: 30vh;
+  max-height: 500px;
+  min-height: 340px;
+  background: linear-gradient(transparent 0,rgba(0,0,0,.5) 100%), #dbfac2;
+  display: flex;
+  padding: 24px 30px;
+}
+
+.image__wrapper {
+  align-self: flex-end;
+  height: 192px;
+  width: 192px;
+  position: relative;
+  margin-inline-end: 24px;
+
+  img {
+    object-fit: cover;
+    -o-object-position: center center;
+    object-position: center center;
+    box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
+  }
+}
+
+.header__info {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-content: space-between;
+  color: #fff;
+
+  h2 {
+    font-weight: 700;
+    margin-top: 4px;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    padding: 4px;
+    width: 100%;
+    font-size: 94px;
+    margin: 12px 0;
+  }
+}

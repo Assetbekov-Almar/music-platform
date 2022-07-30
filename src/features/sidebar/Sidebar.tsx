@@ -11,12 +11,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Sidebar = () => {
 	const dispatch = useAppDispatch()
 	const playlists = useAppSelector(selectUserPlaylists)
+	console.log(playlists)
 
 	useEffect(() => {
 		dispatch(getUserPlaylistsAsync())
 	}, [])
-
-	console.log(playlists)
 
 	return (
 		<div className={styles.container}>
@@ -44,7 +43,7 @@ const Sidebar = () => {
 			<ul className={styles.playlist__links}>
 				{playlists.map((item) => (
 					<li key={item.id}>
-						<Link href={''}>
+						<Link href={`/playlist/${item.id}`}>
 							<a>{item.name}</a>
 						</Link>
 					</li>
