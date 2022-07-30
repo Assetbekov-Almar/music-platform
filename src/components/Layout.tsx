@@ -8,16 +8,16 @@ export default function Layout({ children }) {
 	const { data: session, status } = useSession()
 	const router = useRouter()
 	useEffect(() => {
-		console.log(session)
 		if (session?.error === 'RefreshAccessTokenError') {
 			signOut()
+			return
 		}
-		if (session?.user?.accessToken) spotifyApi.setAccessToken(session.user.accessToken)
+		spotifyApi.setAccessToken(session?.user?.accessToken)
 	}, [session, router])
 
 	return (
 		<>
-			{status === 'authenticated' && <UserProfile />}
+			{spotifyApi.getAccessToken() && status === 'authenticated' && <UserProfile />}
 			<main>{children}</main>
 		</>
 	)
