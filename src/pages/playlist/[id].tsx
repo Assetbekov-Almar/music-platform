@@ -2,10 +2,12 @@ import spotifyApi from '../../../lib/spotify'
 import { getSession } from 'next-auth/react'
 import styles from '../../styles/Playlist.module.scss'
 import Image from 'next/image'
+import { convertMsToTime } from '../../utils/convertMsToTime'
 
 const Playlist = ({ playlist }) => {
 	console.log(playlist)
 	const { images, name, type, owner, tracks } = playlist ?? {}
+	const time = tracks.items.reduce((prev, curr) => prev + curr.track.duration_ms, 0)
 
 	return (
 		<div className={styles.container}>
@@ -19,8 +21,11 @@ const Playlist = ({ playlist }) => {
 					<h2>{type}</h2>
 					<h1>{name}</h1>
 					<div>
-						<span>{owner.display_name}</span>
-						<span>• {tracks.total}, </span>
+						<span className={styles.owner_name}>{owner.display_name}</span>
+						<span className={styles.header__tracks}>
+							{tracks.total} song{tracks.total !== 1 && 's'},
+						</span>
+						<span className={styles.tracks__duration}> {convertMsToTime(time)}</span>
 					</div>
 				</div>
 			</div>

@@ -2,7 +2,7 @@
   height: 30vh;
   max-height: 500px;
   min-height: 340px;
-  background: linear-gradient(transparent 0,rgba(0,0,0,.5) 100%), #dbfac2;
+  background: linear-gradient(transparent 0,rgba(0,0,0,.5) 100%), #aefd98;
   display: flex;
   padding: 24px 30px;
 }
@@ -42,4 +42,21 @@
     font-size: 94px;
     margin: 12px 0;
   }
+}
+
+.owner_name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.header__tracks:before {
+  content: "•";
+  margin: 0 4px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.tracks__duration {
+  color: hsla(0,0%,100%,.7);
+  white-space: nowrap;
 }
