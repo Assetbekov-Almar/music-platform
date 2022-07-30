@@ -4,6 +4,7 @@ import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import spotifyApi from '../../lib/spotify'
 import Sidebar from '../features/sidebar/Sidebar'
+import styles from '../styles/Layout.module.scss'
 
 export default function Layout({ children }) {
 	const { data: session, status } = useSession()
@@ -17,14 +18,14 @@ export default function Layout({ children }) {
 	}, [session, router])
 
 	return (
-		<>
+		<div className={styles.container}>
 			{spotifyApi.getAccessToken() && status === 'authenticated' && (
 				<>
 					<Sidebar />
 					<UserProfile />
 				</>
 			)}
-			<main>{children}</main>
-		</>
+			<main className={styles.main}>{children}</main>
+		</div>
 	)
 }
