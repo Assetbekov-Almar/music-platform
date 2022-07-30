@@ -6,8 +6,9 @@
     grid-area: main-view;
     height: 64px;
     min-width: 0;
-    pointer-events: none;
     z-index: 2;
+    position: sticky;
+    top: 0;
 }
 
 .profile {
@@ -61,7 +62,7 @@
 
 .dropdown {
     position: absolute;
-    top: 100%;
+    top: 40px;
     left: 0;
     background-color: #282828;
     border-radius: 4px;
