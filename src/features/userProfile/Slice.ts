@@ -3,19 +3,18 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { AppState } from '../../app/store'
 import { getUserProfile } from './API'
 
-export interface useProfileState {
+export interface userProfileState {
 	value: any
 	status: 'idle' | 'loading' | 'failed'
 }
 
-const initialState: useProfileState = {
+const initialState: userProfileState = {
 	value: null,
 	status: 'idle',
 }
 
 export const getUseProfileAsync = createAsyncThunk('userProfile/getUserProfile', async () => {
-	const response = await getUserProfile()
-	return response
+	return await getUserProfile()
 })
 
 export const useProfileSlice = createSlice({
@@ -31,6 +30,10 @@ export const useProfileSlice = createSlice({
 			.addCase(getUseProfileAsync.fulfilled, (state, action) => {
 				state.status = 'idle'
 				state.value = action.payload
+			})
+			.addCase(getUseProfileAsync.rejected, (state, action) => {
+				state.status = 'failed'
+				state.value = 'error'
 			})
 	},
 })

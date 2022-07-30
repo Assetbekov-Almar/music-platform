@@ -3,10 +3,16 @@ import { trackSlice } from '../features/track/Slice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { userTracksSlice } from '../features/userTracks/Slice'
 import { useProfileSlice } from '../features/userProfile/Slice'
+import { userPlaylistsSlice } from '../features/sidebar/Slice'
 
 export function makeStore() {
 	return configureStore({
-		reducer: { track: trackSlice.reducer, userTracks: userTracksSlice.reducer, profile: useProfileSlice.reducer },
+		reducer: {
+			track: trackSlice.reducer,
+			userTracks: userTracksSlice.reducer,
+			profile: useProfileSlice.reducer,
+			playlists: userPlaylistsSlice.reducer,
+		},
 	})
 }
 

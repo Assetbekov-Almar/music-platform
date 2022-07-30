@@ -14,10 +14,12 @@ const UserProfile = () => {
 	const profileData = useAppSelector(selectUserProfile)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 	const { images, display_name } = profileData ?? {}
-	console.log(profileData)
+
 	useEffect(() => {
 		dispatch(getUseProfileAsync())
 	}, [])
+
+	if (profileData === 'error') return <div>Something went wrong. Try again later, please.</div>
 
 	return (
 		<div className={styles.container}>

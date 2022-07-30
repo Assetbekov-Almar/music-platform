@@ -1,4 +1,3 @@
-import { getCookie } from 'cookies-next'
 import spotifyApi from '../../../lib/spotify'
 
 export async function getUserProfile() {

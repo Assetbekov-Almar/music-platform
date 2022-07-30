@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import spotifyApi from '../../lib/spotify'
+import Sidebar from '../features/sidebar/Sidebar'
 
 export default function Layout({ children }) {
 	const { data: session, status } = useSession()
@@ -17,7 +18,12 @@ export default function Layout({ children }) {
 
 	return (
 		<>
-			{spotifyApi.getAccessToken() && status === 'authenticated' && <UserProfile />}
+			{spotifyApi.getAccessToken() && status === 'authenticated' && (
+				<>
+					<Sidebar />
+					<UserProfile />
+				</>
+			)}
 			<main>{children}</main>
 		</>
 	)
