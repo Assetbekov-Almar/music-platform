@@ -4,7 +4,7 @@ export function convertMsToTime(duration: number) {
 	const seconds = Math.floor((duration / 1000) % 60)
 
 	if (hours === 0) {
-		return minutes + ' min ' + seconds + ' sec'
+		return minutes + ' min ' + (seconds < 9 ? '0' + seconds : seconds) + ' sec'
 	}
 
 	return hours + ' hr ' + minutes + ' min'

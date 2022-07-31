@@ -4,7 +4,7 @@ export function convertMsToTimeWithoutText(duration: number) {
 	const seconds = Math.floor((duration / 1000) % 60)
 
 	if (hours === 0) {
-		return minutes + ':' + seconds
+		return minutes + ':' + (seconds < 9 ? '0' + seconds : seconds)
 	}
 
 	return hours + ':' + minutes + ':' + seconds

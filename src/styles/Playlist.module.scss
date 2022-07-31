@@ -89,6 +89,19 @@
   padding: 0 16px;
 }
 
+.playlist {
+  border-bottom: 1px solid hsla(0,0%,100%,.1);
+  display: flex;
+  flex-flow: column;
+}
+
+.play__button {
+  &:hover {
+    cursor: pointer;
+    color: #fff;
+  }
+}
+
 .playlist__main,
 .header__grid {
   grid-gap: 16px;
@@ -96,7 +109,6 @@
   grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 3fr [last] minmax(120px,1fr);
   align-items: center;
   padding: 0 16px;
-  border-bottom: 1px solid hsla(0,0%,100%,.1);
   color: #b3b3b3;
   height: 100%;
 
@@ -109,6 +121,17 @@
 
   .track__add_time {
     text-transform: capitalize;
+  }
+}
+
+.playlist__main {
+  height: 56px;
+  &:hover {
+    background-color: hsla(0,0%,100%,.1);
+
+    .play__button {
+      color: #fff;
+    }
   }
 }
 
@@ -173,4 +196,46 @@
 
 .track_inexplicit {
   grid-column-start: badges;
+}
+
+.premium__error {
+  position: fixed;
+  background-color: #fff;
+  border-radius: 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  width: 600px;
+  height: 150px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.close__btn {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 30px;
+  color: #a09f9f;
+
+  &:hover {
+    color: #b0b0b0;
+    cursor: pointer;
+  }
 }

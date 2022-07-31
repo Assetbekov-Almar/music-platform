@@ -4,18 +4,44 @@ import styles from '../../styles/Playlist.module.scss'
 import Image from 'next/image'
 import { convertMsToTime } from '../../utils/convertMsToTime'
 import { faClock } from '@fortawesome/free-solid-svg-icons/faClock'
+import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { convertMsToTimeWithoutText } from '../../utils/convertMsToTimeWithoutText'
 import { formatDate } from '../../utils/formatDate'
+import { useState } from 'react'
 
 const Playlist = ({ playlist }) => {
 	console.log(playlist)
 	const { images, name, type, owner, tracks } = playlist ?? {}
 	const time = tracks.items.reduce((prev, curr) => prev + curr.track.duration_ms, 0)
+	const [isAccountError, setIsAccountError] = useState(true)
+	const [hoveredSongId, setHoveredSongId] = useState('')
+
+	const trackPlayHandler = async (uri: string) => {
+		try {
+			await spotifyApi.play({ uris: uri })
+			setIsAccountError(true)
+		} catch (e) {
+			setIsAccountError(false)
+			console.log(e)
+		}
+	}
+
+	console.log(isAccountError)
 
 	return (
 		<>
+			{!isAccountError && (
+				<>
+					<div className={styles.backdrop} />
+					<div className={styles.premium__error}>
+						<FontAwesomeIcon icon={faTimes} className={styles.close__btn} onClick={() => setIsAccountError(true)} />
+						You need to have a premium account in order to play a song.
+					</div>
+				</>
+			)}
 			<div className={styles.header}>
 				{images?.length > 0 && (
 					<div className={styles.image__wrapper}>
@@ -48,16 +74,30 @@ const Playlist = ({ playlist }) => {
 							</div>
 						</div>
 					</div>
-					<div className={styles.playlist__main}>
+					<div className={styles.playlist}>
 						{tracks.items.map((item, index) => {
-							const { album, name, explicit, artists, duration_ms } = item.track
+							const { album, name, explicit, artists, duration_ms, uri, id } = item.track
 							const { url, width, height } = album.images[0]
 							return (
-								<>
-									<span>{index + 1}</span>
+								<div
+									className={styles.playlist__main}
+									key={id}
+									onMouseEnter={() => setHoveredSongId(id)}
+									onMouseLeave={() => setHoveredSongId('')}
+								>
+									{hoveredSongId === id ? (
+										<FontAwesomeIcon
+											icon={faPlay}
+											className={styles.play__button}
+											onClick={() => trackPlayHandler(uri)}
+										/>
+									) : (
+										<span>{index + 1}</span>
+									)}
+
 									<span className={styles.track__container}>
 										<div className={styles.track__cover}>
-											<Image src={url} width={width} height={height} />
+											<Image src={url} width={width} height={height} alt={name} />
 										</div>
 										<div className={styles.track}>
 											<div className={styles.track__name}>{name}</div>
@@ -75,7 +115,7 @@ const Playlist = ({ playlist }) => {
 									<span>{album.name}</span>
 									<span className={styles.track__add_time}>{formatDate(item.added_at)}</span>
 									<span>{convertMsToTimeWithoutText(duration_ms)}</span>
-								</>
+								</div>
 							)
 						})}
 					</div>
