@@ -1,3 +1,5 @@
+@use 'variables';
+
 .header {
   height: 30vh;
   max-height: 500px;
@@ -59,4 +61,116 @@
 .tracks__duration {
   color: hsla(0,0%,100%,.7);
   white-space: nowrap;
+}
+
+.main {
+  background: variables.$background-base;
+  isolation: isolate;
+}
+
+.background {
+  background-image: linear-gradient(rgba(0,0,0,.6) 0, variables.$background-base 100%);
+  background-color: #aefd98;
+  height: 232px;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.playlist__container {
+  padding: 20px 32px;
+}
+
+.playlist__header {
+  border-bottom: 1px solid transparent;
+  box-sizing: content-box;
+  height: 36px;
+  margin: 0 -16px 8px;
+  padding: 0 16px;
+}
+
+.playlist__main,
+.header__grid {
+  grid-gap: 16px;
+  display: grid;
+  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 3fr [last] minmax(120px,1fr);
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid hsla(0,0%,100%,.1);
+  color: #b3b3b3;
+  height: 100%;
+
+  span {
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 14px;
+  }
+
+  .track__add_time {
+    text-transform: capitalize;
+  }
+}
+
+.track__container {
+  display: flex;
+  align-items: center;
+}
+
+.track__cover {
+  width: 40px;
+  height: 40px;
+  margin-right: 16px;
+}
+
+.track {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-column-gap: 8px;
+  -moz-column-gap: 8px;
+  column-gap: 8px;
+  display: grid;
+  grid-template:
+        "title title"
+        "badges subtitle"/auto 1fr;
+}
+
+.track__name {
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+  grid-area: title;
+  justify-self: start;
+}
+
+.track__explicit {
+  box-sizing: border-box;
+  font-size: 12px;
+  font-weight: 400;
+  align-items: center;
+  color: variables.$background-base;
+  display: inline-flex;
+  grid-area: badges;
+  justify-content: center;
+  background-color: hsla(0,0%,100%,.6);
+  border-radius: 2px;
+  height: 16px;
+  line-height: 10px;
+  padding: 3px 5px;
+  text-transform: uppercase;
+}
+
+.track__artists {
+  grid-column-start: subtitle;
+
+  span {
+    text-transform: capitalize;
+    font-size: 12px;
+  }
+}
+
+.track_inexplicit {
+  grid-column-start: badges;
 }

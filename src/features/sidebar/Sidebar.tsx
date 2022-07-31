@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Sidebar = () => {
 	const dispatch = useAppDispatch()
 	const playlists = useAppSelector(selectUserPlaylists)
-	console.log(playlists)
 
 	useEffect(() => {
 		dispatch(getUserPlaylistsAsync())

@@ -22,7 +22,8 @@
   flex-direction: column;
   grid-area: main-view;
   min-height: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
   width: 100%;
+  overflow-y: auto;
 }
