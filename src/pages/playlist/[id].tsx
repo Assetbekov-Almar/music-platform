@@ -11,25 +11,29 @@ import classNames from 'classnames'
 import { convertMsToTimeWithoutText } from '../../utils/convertMsToTimeWithoutText'
 import { formatDate } from '../../utils/formatDate'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setCurrentSongId, play, pause } from '../../features/playlist/Slice'
 
 const Playlist = ({ playlist }) => {
-	console.log(playlist)
 	const { images, name, type, owner, tracks } = playlist ?? {}
-	const time = tracks.items.reduce((prev, curr) => prev + curr.track.duration_ms, 0)
+	const time = tracks.items.reduce((prev: number, curr) => prev + curr.track.duration_ms, 0)
 	const [isAccountError, setIsAccountError] = useState(true)
 	const [hoveredSongId, setHoveredSongId] = useState('')
+	const dispatch = useDispatch()
 
-	const trackPlayHandler = async (uri: string) => {
+	const trackPlayHandler = async (uri: string, id: string) => {
 		try {
+			dispatch(setCurrentSongId(id))
+			dispatch(play())
 			await spotifyApi.play({ uris: uri })
 			setIsAccountError(true)
 		} catch (e) {
+			dispatch(setCurrentSongId(''))
+			dispatch(pause())
 			setIsAccountError(false)
 			console.log(e)
 		}
 	}
-
-	console.log(isAccountError)
 
 	return (
 		<>
@@ -89,7 +93,7 @@ const Playlist = ({ playlist }) => {
 										<FontAwesomeIcon
 											icon={faPlay}
 											className={styles.play__button}
-											onClick={() => trackPlayHandler(uri)}
+											onClick={() => trackPlayHandler(uri, id)}
 										/>
 									) : (
 										<span>{index + 1}</span>

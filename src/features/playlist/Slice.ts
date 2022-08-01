@@ -1,43 +1,37 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
 import type { AppState } from '../../app/store'
-import { getPlaylist } from './API'
 
 export interface playlistState {
-	value: any
-	status: 'idle' | 'loading' | 'failed'
+	id: string
+	isPlaying: boolean
 }
 
 const initialState: playlistState = {
-	value: [],
-	status: 'idle',
+	id: '',
+	isPlaying: false,
 }
-
-export const getPlaylistAsync = createAsyncThunk('playlist/getPlaylist', async (playlistId) => {
-	return await getPlaylist(playlistId)
-})
 
 export const playlistSlice = createSlice({
 	name: 'playlist',
 	initialState,
-	reducers: {},
-	extraReducers: (builder) => {
-		builder
-			.addCase(getPlaylistAsync.pending, (state) => {
-				state.status = 'loading'
-				state.value = []
-			})
-			.addCase(getPlaylistAsync.fulfilled, (state, action) => {
-				state.status = 'idle'
-				state.value = action.payload
-			})
-			.addCase(getPlaylistAsync.rejected, (state, action) => {
-				state.status = 'failed'
-				state.value = 'error'
-			})
+	reducers: {
+		play: (state) => {
+			state.isPlaying = true
+		},
+		pause: (state) => {
+			state.isPlaying = false
+		},
+		setCurrentSongId: (state, action: PayloadAction<string>) => {
+			state.id = action.payload
+		},
 	},
 })
 
-export const selectPlaylist = (state: AppState) => state.playlist.value
+export const selectSongId = (state: AppState) => state.playlist.id
+export const selectIsPlaylistPlaying = (state: AppState) => state.playlist.isPlaying
+
+export const { play, pause, setCurrentSongId } = playlistSlice.actions
 
 export default playlistSlice.reducer
