@@ -4,34 +4,25 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { AppState } from '../../app/store'
 
 export interface playlistState {
-	id: string
-	isPlaying: boolean
+	track: any
 }
 
 const initialState: playlistState = {
-	id: '',
-	isPlaying: false,
+	track: null,
 }
 
 export const playlistSlice = createSlice({
 	name: 'playlist',
 	initialState,
 	reducers: {
-		play: (state) => {
-			state.isPlaying = true
-		},
-		pause: (state) => {
-			state.isPlaying = false
-		},
-		setCurrentSongId: (state, action: PayloadAction<string>) => {
-			state.id = action.payload
+		setCurrentTrack: (state, action: PayloadAction<string>) => {
+			state.track = action.payload
 		},
 	},
 })
 
-export const selectSongId = (state: AppState) => state.playlist.id
-export const selectIsPlaylistPlaying = (state: AppState) => state.playlist.isPlaying
+export const selectSongId = (state: AppState) => state.playlist.track
 
-export const { play, pause, setCurrentSongId } = playlistSlice.actions
+export const { setCurrentTrack } = playlistSlice.actions
 
 export default playlistSlice.reducer

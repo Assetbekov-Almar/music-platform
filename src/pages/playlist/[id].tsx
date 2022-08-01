@@ -12,7 +12,8 @@ import { convertMsToTimeWithoutText } from '../../utils/convertMsToTimeWithoutTe
 import { formatDate } from '../../utils/formatDate'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setCurrentSongId, play, pause } from '../../features/playlist/Slice'
+import { setCurrentTrack } from '../../features/playlist/Slice'
+import Track from '../../components/Track'
 
 const Playlist = ({ playlist }) => {
 	const { images, name, type, owner, tracks } = playlist ?? {}
@@ -21,15 +22,14 @@ const Playlist = ({ playlist }) => {
 	const [hoveredSongId, setHoveredSongId] = useState('')
 	const dispatch = useDispatch()
 
-	const trackPlayHandler = async (uri: string, id: string) => {
+	const trackPlayHandler = async (uri: string, track) => {
 		try {
-			dispatch(setCurrentSongId(id))
-			dispatch(play())
+			dispatch(setCurrentTrack(track))
+
 			await spotifyApi.play({ uris: uri })
 			setIsAccountError(true)
 		} catch (e) {
-			dispatch(setCurrentSongId(''))
-			dispatch(pause())
+			// dispatch(setCurrentTrack(null))
 			setIsAccountError(false)
 			console.log(e)
 		}
@@ -80,8 +80,8 @@ const Playlist = ({ playlist }) => {
 					</div>
 					<div className={styles.playlist}>
 						{tracks.items.map((item, index) => {
-							const { album, name, explicit, artists, duration_ms, uri, id } = item.track
-							const { url, width, height } = album.images[0]
+							const { album, duration_ms, uri, id } = item.track
+
 							return (
 								<div
 									className={styles.playlist__main}
@@ -93,29 +93,13 @@ const Playlist = ({ playlist }) => {
 										<FontAwesomeIcon
 											icon={faPlay}
 											className={styles.play__button}
-											onClick={() => trackPlayHandler(uri, id)}
+											onClick={() => trackPlayHandler(uri, item.track)}
 										/>
 									) : (
 										<span>{index + 1}</span>
 									)}
 
-									<span className={styles.track__container}>
-										<div className={styles.track__cover}>
-											<Image src={url} width={width} height={height} alt={name} />
-										</div>
-										<div className={styles.track}>
-											<div className={styles.track__name}>{name}</div>
-											{explicit && <span className={styles.track__explicit}>E</span>}
-											<span className={classNames(styles.track__artists, { [styles.track_inexplicit]: !explicit })}>
-												{artists.map((artist, index) => (
-													<span key={artist.id}>
-														{index !== 0 && ', '}
-														{artist.name}
-													</span>
-												))}
-											</span>
-										</div>
-									</span>
+									<Track track={item.track} />
 									<span>{album.name}</span>
 									<span className={styles.track__add_time}>{formatDate(item.added_at)}</span>
 									<span>{convertMsToTimeWithoutText(duration_ms)}</span>
