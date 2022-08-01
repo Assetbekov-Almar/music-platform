@@ -1,0 +1,55 @@
+.container {
+  grid-area: now-playing-bar;
+  width: 100%;
+  z-index: 4;
+  background-color: #181818;
+  border-top: 1px solid #282828;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 90px;
+  min-width: 620px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 16px;
+  color: #fff;
+}
+
+.track {
+  min-width: 180px;
+  width: 30%;
+}
+
+.player {
+  max-width: 722px;
+  width: 40%;
+}
+
+.volume {
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  justify-content: flex-end;
+  min-width: 180px;
+  width: 30%;
+  -webkit-box-direction: normal;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}

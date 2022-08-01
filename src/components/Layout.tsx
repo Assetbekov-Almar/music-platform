@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import spotifyApi from '../../lib/spotify'
 import Sidebar from '../features/sidebar/Sidebar'
 import styles from '../styles/Layout.module.scss'
+import Footer from './Footer'
 
 export default function Layout({ children }) {
 	const { data: session, status } = useSession()
@@ -25,6 +26,7 @@ export default function Layout({ children }) {
 				<>
 					<Sidebar />
 					<UserProfile />
+					<Footer />
 				</>
 			)}
 			<main className={styles.main}>{children}</main>
