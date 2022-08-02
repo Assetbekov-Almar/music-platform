@@ -1,3 +1,5 @@
+@use 'variables';
+
 .container {
   grid-area: now-playing-bar;
   width: 100%;
@@ -37,6 +39,205 @@
 .player {
   max-width: 722px;
   width: 40%;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  justify-content: center;
+  -webkit-box-direction: normal;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.player__btns {
+  gap: 16px;
+  margin-bottom: 8px;
+  -webkit-box-orient: horizontal;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  width: 100%;
+  -webkit-box-direction: normal;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  .player__play_btn {
+    --button-size: 44px;
+  }
+
+  button {
+    --button-size: 28px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: hsla(0,0%,100%,.7);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: var(--button-size);
+    justify-content: center;
+    min-width: var(--button-size);
+    position: relative;
+    width: var(--button-size);
+
+    &:hover {
+      color: #fff;
+      cursor: pointer;
+      transform: scale(1.06);
+    }
+
+    svg {
+      height: 100%;
+      width: 100% ;
+    }
+  }
+}
+
+.player__btns_left,
+.player__btns_right {
+  -webkit-box-flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex: 1;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+}
+
+.player__btns_left {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.playback__bar {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.playback__progress_time,
+.playback__duration_time {
+  min-width: 40px;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 14px;
+  font-weight: 400;
+  color: variables.$text-subdued;
+}
+
+.playback__progress_time {
+  text-align: right;
+}
+
+.playback__duration_time {
+  text-align: left;
+}
+
+.playback__progress_bar {
+  height: 12px;
+  position: relative;
+  width: 100%;
+
+  label {
+    clip: rect(0 0 0 0);
+    border: 0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+
+    input {
+      color: #b3b3b3;
+      text-transform: none;
+    }
+  }
+}
+
+.progress_bar {
+  --bg-color: hsla(0,0%,100%,.3);
+  --fg-color: #fff;
+  --is-active-fg-color: #1db954;
+  --progress-bar-transform: 0%;
+  --progress-bar-height: 4px;
+  --progress-bar-radius: calc(var(--progress-bar-height)/2);
+  height: 100%;
+  overflow: hidden;
+  -ms-touch-action: none;
+  touch-action: none;
+  width: 100%;
+}
+
+.progress_bar__background {
+  border-radius: var(--progress-bar-radius);
+  height: var(--progress-bar-height);
+  width: 100%;
+  background-color: var(--bg-color);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.progress_bar__circle {
+  background-color: #fff;
+  border: 0;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 2px 4px 0 rgb(0 0 0 / 50%);
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 50%);
+  display: none;
+  height: 12px;
+  left: var(--progress-bar-transform);
+  margin-left: -6px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 12px;
+  z-index: 100;
+}
+
+.progress_bar_active {
+  border-radius: var(--progress-bar-radius);
+  height: var(--progress-bar-height);
+  width: 100%;
+  overflow: hidden;
+
+  div {
+    background-color: var(--fg-color);
+    border-radius: var(--progress-bar-radius);
+    height: var(--progress-bar-height);
+    -webkit-transform: translateX(calc(-100% + var(--progress-bar-transform)));
+    transform: translateX(calc(-100% + var(--progress-bar-transform)));
+    width: 100%;
+  }
 }
 
 .volume {

@@ -7,7 +7,6 @@ import { faClock } from '@fortawesome/free-solid-svg-icons/faClock'
 import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import classNames from 'classnames'
 import { convertMsToTimeWithoutText } from '../../utils/convertMsToTimeWithoutText'
 import { formatDate } from '../../utils/formatDate'
 import { useState } from 'react'
@@ -24,12 +23,11 @@ const Playlist = ({ playlist }) => {
 
 	const trackPlayHandler = async (uri: string, track) => {
 		try {
-			dispatch(setCurrentTrack(track))
-
 			await spotifyApi.play({ uris: uri })
+			dispatch(setCurrentTrack(track))
 			setIsAccountError(true)
 		} catch (e) {
-			// dispatch(setCurrentTrack(null))
+			dispatch(setCurrentTrack(null))
 			setIsAccountError(false)
 			console.log(e)
 		}
@@ -81,7 +79,6 @@ const Playlist = ({ playlist }) => {
 					<div className={styles.playlist}>
 						{tracks.items.map((item, index) => {
 							const { album, duration_ms, uri, id } = item.track
-
 							return (
 								<div
 									className={styles.playlist__main}
