@@ -7,10 +7,43 @@ import { faBackwardStep } from '@fortawesome/free-solid-svg-icons/faBackwardStep
 import { faCirclePlay } from '@fortawesome/free-solid-svg-icons/faCirclePlay'
 import { faForwardStep } from '@fortawesome/free-solid-svg-icons/faForwardStep'
 import { faRepeat } from '@fortawesome/free-solid-svg-icons/faRepeat'
+import { faVolumeLow } from '@fortawesome/free-solid-svg-icons/faVolumeLow'
+import { faCircleStop } from '@fortawesome/free-solid-svg-icons/faCircleStop'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react'
+import spotifyApi from '../../lib/spotify'
 
 const Footer = () => {
 	const track = useSelector(selectSongId)
+	const token = spotifyApi.getAccessToken()
+
+	const [is_paused, setPaused] = useState<boolean>(false)
+	const [player, setPlayer] = useState<Spotify.Player | null>(null)
+	console.log(player)
+
+	useEffect(() => {
+		window.onSpotifyWebPlaybackSDKReady = () => {
+			const player = new window.Spotify.Player({
+				name: 'Web Playback SDK',
+				getOAuthToken: (cb) => {
+					cb(token)
+				},
+				volume: 0.5,
+			})
+
+			setPlayer(player)
+
+			player.addListener('player_state_changed', (state) => {
+				if (!state) {
+					return
+				}
+
+				setPaused(state.paused)
+			})
+
+			player.connect()
+		}
+	}, [token, track])
 
 	return (
 		<footer className={styles.container}>
@@ -23,17 +56,17 @@ const Footer = () => {
 						<button>
 							<FontAwesomeIcon icon={faShuffle} />
 						</button>
-						<button>
+						<button onClick={() => player.previousTrack()}>
 							<FontAwesomeIcon icon={faBackwardStep} />
 						</button>
 					</div>
 
-					<button className={styles.player__play_btn}>
-						<FontAwesomeIcon icon={faCirclePlay} />
+					<button className={styles.player__play_btn} onClick={() => player.togglePlay()}>
+						<FontAwesomeIcon icon={is_paused ? faCircleStop : faCirclePlay} />
 					</button>
 
 					<div className={styles.player__btns_right}>
-						<button>
+						<button onClick={() => player.nextTrack()}>
 							<FontAwesomeIcon icon={faForwardStep} />
 						</button>
 						<button>
@@ -60,7 +93,11 @@ const Footer = () => {
 				</div>
 				<div />
 			</div>
-			<div className={styles.volume}>asd</div>
+			<div className={styles.volume}>
+				<button>
+					<FontAwesomeIcon icon={faVolumeLow} />
+				</button>
+			</div>
 		</footer>
 	)
 }

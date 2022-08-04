@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setCurrentTrack } from '../../features/playlist/Slice'
 import Track from '../../components/Track'
+import spotify from '../../../lib/spotify'
 
 const Playlist = ({ playlist }) => {
 	const { images, name, type, owner, tracks } = playlist ?? {}
@@ -23,10 +24,14 @@ const Playlist = ({ playlist }) => {
 
 	const trackPlayHandler = async (uri: string, track) => {
 		try {
-			await spotifyApi.play({ uris: uri })
+			const devices = await spotifyApi.getMyDevices()
+
+			const state = await spotifyApi.transferMyPlayback([devices.body.devices[0]?.id], { play: true })
+			await spotifyApi.play({ uris: [uri] })
 			dispatch(setCurrentTrack(track))
 			setIsAccountError(true)
 		} catch (e) {
+			if (e) return
 			dispatch(setCurrentTrack(null))
 			setIsAccountError(false)
 			console.log(e)

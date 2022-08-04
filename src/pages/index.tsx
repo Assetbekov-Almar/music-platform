@@ -10,10 +10,11 @@ const Home: NextPage = () => {
 				<title>Music Platform</title>
 				<meta name='description' content='A unique music app platform' />
 			</Head>
-
-			<main>
-				<Track />
-			</main>
+			<body>
+				<main>
+					<Track />
+				</main>
+			</body>
 		</div>
 	)
 }

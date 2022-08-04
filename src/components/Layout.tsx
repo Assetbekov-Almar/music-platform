@@ -6,6 +6,7 @@ import spotifyApi from '../../lib/spotify'
 import Sidebar from '../features/sidebar/Sidebar'
 import styles from '../styles/Layout.module.scss'
 import Footer from './Footer'
+import Script from 'next/script'
 
 export default function Layout({ children }) {
 	const { data: session, status } = useSession()
@@ -30,6 +31,7 @@ export default function Layout({ children }) {
 				</>
 			)}
 			<main className={styles.main}>{children}</main>
+			<Script src='https://sdk.scdn.co/spotify-player.js' />
 		</div>
 	)
 }
